@@ -1,9 +1,10 @@
-from app import create_app, db
+# seed.py
+from extensions import db
+from app import create_app
 from models import User, Note
 from faker import Faker
 
 fake = Faker()
-
 app = create_app()
 
 with app.app_context():

@@ -1,20 +1,16 @@
+# app.py
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
-from flask_bcrypt import Bcrypt
-from flask_jwt_extended import JWTManager
-
 from config import Config
 
-db = SQLAlchemy()
-migrate = Migrate()
-bcrypt = Bcrypt()
-jwt = JWTManager()
+# Import extensions from a single source of truth
+from extensions import db, migrate, bcrypt, jwt
 
 def create_app():
+    # Create Flask app
     app = Flask(__name__)
     app.config.from_object(Config)
 
+    # Initialize extensions with the app
     db.init_app(app)
     migrate.init_app(app, db)
     bcrypt.init_app(app)
@@ -27,6 +23,7 @@ def create_app():
 
     return app
 
+# Run the app directly (development mode)
 if __name__ == "__main__":
     app = create_app()
     app.run(debug=True)
